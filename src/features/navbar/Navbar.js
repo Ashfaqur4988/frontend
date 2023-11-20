@@ -4,10 +4,14 @@ const Navbar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div>
-      <nav className="flex items-center justify-between flex-wrap p-6 bg-white border-gray-200  dark:bg-gray-900">
+    <div className="">
+      <nav
+        className="flex items-center justify-between flex-wrap p-3 bg-gray-900
+      "
+      >
+        {/* div for the logo */}
         <div className="  text-white mr-6 lg:mr-72">
-          <img src="/NexusNest.png" className="w-100 h-10 mr-2" alt="Logo" />
+          <img src="/NexusNest.png" className=" h-10 " alt="Logo" />
         </div>
         <div>
           <button className="block lg:hidden text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm  px-4 lg:px-5 py-2 lg:mr-2 lg:py-2.5 sm:mr-2 lg:mr-0 dark:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none dark:focus:ring-purple-800">
@@ -94,6 +98,7 @@ const Navbar = ({ children }) => {
           </div>
         </div>
       </nav>
+      <div className="">{children}</div>
     </div>
   );
 };

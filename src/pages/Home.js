@@ -1,10 +1,12 @@
 import Navbar from "../features/navbar/Navbar";
-import { Posts } from "../features/posts/Posts";
+import { Posts } from "../features/posts/components/Posts";
 
 const Home = () => {
   return (
     <div className="">
-      <Navbar />
+      <Navbar>
+        <Posts />
+      </Navbar>
     </div>
   );
 };

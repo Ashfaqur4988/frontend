@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Posts } from "./features/posts/Posts";
+
 import { fetchAllPostsAsync } from "./features/posts/postSlice";
 import { useDispatch } from "react-redux";
 import "./App.css";
