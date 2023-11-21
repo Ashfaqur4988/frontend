@@ -28,7 +28,7 @@ export function Posts() {
           return (
             <section
               key={index}
-              className="w-3/5 lg:w-3/5 md:h-2/3 sm:h-2/3 bg-white shadow-xl m-4 border-4 border-gray-500/50 p-2 "
+              className="w-3/5 lg:w-3/5 md:w-2/3 sm:w-2/3 bg-white shadow-xl m-4 border-4 border-gray-500/50 p-2 "
             >
               <div className=" flex justify-between">
                 <SmilePlus color="red" className="h-10" />

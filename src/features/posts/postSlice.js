@@ -7,16 +7,16 @@ const initialState = {
 };
 
 export const fetchAllPostsAsync = createAsyncThunk(
-  "post/fetchPost",
-  async (amount) => {
-    const response = await fetchAllPosts(amount);
+  "posts/fetchPost",
+  async () => {
+    const response = await fetchAllPosts();
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
 );
 
 export const postSlice = createSlice({
-  name: "post",
+  name: "posts",
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {},

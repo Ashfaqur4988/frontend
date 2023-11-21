@@ -6,7 +6,8 @@ const Navbar = ({ children }) => {
   return (
     <div className="">
       <nav
-        className="flex items-center justify-between flex-wrap p-3 bg-gray-900
+        className="flex items-center justify-between flex-wrap p-3 bg-gray-900 border-b-2 border-gray-500/50 
+        sticky top-0 right-0 left-0
       "
       >
         {/* div for the logo */}
