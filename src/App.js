@@ -9,10 +9,26 @@ import Home from "./pages/Home";
 import SignUp from "./features/auth/components/SignUp";
 import Login from "./features/auth/components/Login";
 
+import PostDetailsPage from "./pages/PostDetailsPage";
+import UserProfilePage from "./pages/UserProfilePage";
+import SettingsPage from "./pages/SettingsPage";
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+  },
+  {
+    path: "/post-details",
+    element: <PostDetailsPage />,
+  },
+  {
+    path: "/user-profile",
+    element: <UserProfilePage />,
+  },
+  {
+    path: "/settings",
+    element: <SettingsPage />,
   },
   {
     path: "/signup",
@@ -30,7 +46,7 @@ function App() {
     dispatch(fetchAllPostsAsync());
   }, [dispatch]);
   return (
-    <div className="App bg-gray-900">
+    <div className="App">
       <div>
         <RouterProvider router={router} />
       </div>

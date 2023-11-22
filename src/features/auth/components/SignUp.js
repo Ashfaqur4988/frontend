@@ -19,9 +19,12 @@ const SignUp = () => {
   } = useForm();
 
   return (
-    <div className="bg-gray-900 h-screen w-screen py-6 px-4">
+    <div
+      className="bg-[url('https://images.unsplash.com/photo-1544027993-37dbfe43562a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]
+     h-screen w-screen py-6 px-4"
+    >
       <div className="flex flex-col items-center justify-center">
-        <div className="flex items-center text-2xl font-semibold text-white">
+        <div className="flex items-center mb-2 text-2xl font-semibold text-blue-950">
           <img
             src="/NexusNest.png"
             alt="logo"
@@ -169,32 +172,7 @@ const SignUp = () => {
                   </p>
                 )}
               </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-start">
-                  <div className="flex items-center h-5">
-                    <input
-                      type="checkbox"
-                      name="remember"
-                      id="remember"
-                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                    />
-                  </div>
-                  <div className="ml-3 text-sm">
-                    <label
-                      htmlFor="remember"
-                      className="text-gray-500 dark:text-gray-300"
-                    >
-                      Remember me
-                    </label>
-                  </div>
-                </div>
-                <Link
-                  to={""}
-                  className="text-sm font-medium text-gray-400 hover:underline hover:text-gray-100 "
-                >
-                  Forgot Password?
-                </Link>
-              </div>
+
               <button
                 type="submit"
                 className="w-full mt-8 inline-flex items-center justify-center rounded-xl bg-blue-600 py-3 px-6 font-dm text-base font-medium text-white shadow-xl transition-transform duration-200 ease-in-out hover:scale-[1.02]"

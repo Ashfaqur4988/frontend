@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchAllPosts } from "./postAPI";
+import { createNewStatus, fetchAllPosts } from "./postAPI";
 
 const initialState = {
   posts: [],
@@ -11,6 +11,14 @@ export const fetchAllPostsAsync = createAsyncThunk(
   async () => {
     const response = await fetchAllPosts();
     // The value we return becomes the `fulfilled` action payload
+    return response.data;
+  }
+);
+
+export const createNewStatusAsync = createAsyncThunk(
+  "posts/createNewStatus",
+  async (post) => {
+    const response = await createNewStatus(post);
     return response.data;
   }
 );
@@ -30,6 +38,13 @@ export const postSlice = createSlice({
       .addCase(fetchAllPostsAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.posts = action.payload;
+      })
+      .addCase(createNewStatusAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(createNewStatusAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.posts.push(action.payload);
       });
   },
 });

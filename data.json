@@ -351,110 +351,17 @@
         "fiction"
       ],
       "reactions": 0
+    },
+    {
+      "status": "new post",
+      "title": "new post",
+      "id": 32
+    },
+    {
+      "status": "new",
+      "title": "new",
+      "id": 33
     }
   ],
-  "users": [
-    {
-      "email": "mk@mk.com",
-      "name": "Mikel Arteta",
-      "password": "Mikel@123",
-      "id": 1
-    },
-    {
-      "email": "mk@mk.com",
-      "name": "Mikel Arteta",
-      "password": "Mikel@123",
-      "id": 2
-    },
-    {
-      "email": "mk@mk.com",
-      "name": "Mikel Arteta",
-      "password": "Mikel@123",
-      "id": 3
-    },
-    {
-      "email": "mk@mk.com",
-      "name": "Mikel Arteta",
-      "password": "Mikel@123",
-      "id": 4
-    },
-    {
-      "email": "mk@mk.com",
-      "name": "Mikel Arteta",
-      "password": "Mikel@123",
-      "id": 5
-    },
-    {
-      "email": "mk@mk.com",
-      "name": "Mikel Arteta",
-      "password": "Mikel@123",
-      "id": 6
-    },
-    {
-      "email": "mk@mk.com",
-      "name": "Mikel Arteta",
-      "password": "Mikel@123",
-      "id": 7
-    },
-    {
-      "email": "mk@mk.com",
-      "name": "Mikel Arteta",
-      "password": "Mikel@123",
-      "id": 8
-    },
-    {
-      "email": "mk@mk.com",
-      "name": "Mikel Arteta",
-      "password": "Mikel@123",
-      "id": 9
-    },
-    {
-      "email": "mk@mk.com",
-      "name": "Mikel Arteta",
-      "password": "Mikel@123",
-      "id": 10
-    },
-    {
-      "email": "mk@mk.com",
-      "name": "Mikel Arteta",
-      "password": "Mikel@123",
-      "id": 11
-    },
-    {
-      "email": "mk@mk.com",
-      "name": "Mikel Arteta",
-      "password": "Mikel@123",
-      "id": 12
-    },
-    {
-      "email": "mk@mk.com",
-      "name": "Mikel Arteta",
-      "password": "Mikel@123",
-      "id": 13
-    },
-    {
-      "email": "mk@mk.com",
-      "name": "Mikel Arteta",
-      "password": "Mikel@123",
-      "id": 14
-    },
-    {
-      "email": "mk@mk.com",
-      "name": "Mikel Arteta",
-      "password": "Mikel@123",
-      "id": 15
-    },
-    {
-      "email": "mk@mk.com",
-      "name": "Mikel Arteta",
-      "password": "Mikel@123",
-      "id": 16
-    },
-    {
-      "email": "mk@mk.com",
-      "name": "Mikel Arteta",
-      "password": "Mikel@123",
-      "id": 17
-    }
-  ]
+  "users": []
 }

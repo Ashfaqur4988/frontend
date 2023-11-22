@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import Sidebar from "../common/Sidebar";
+import { Link } from "react-router-dom";
+import { Settings, UserCircle2 } from "lucide-react";
 
 const Navbar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -6,7 +9,7 @@ const Navbar = ({ children }) => {
   return (
     <div className="">
       <nav
-        className="flex items-center justify-between flex-wrap p-3 bg-gray-900 border-b-2 border-gray-500/50 
+        className=" flex items-center justify-between flex-wrap p-3 bg-gray-900 border-b-2 border-gray-500/50 
         sticky top-0 right-0 left-0
       "
       >
@@ -80,25 +83,28 @@ const Navbar = ({ children }) => {
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to={"/settings"}
                   className="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                 >
-                  Team
-                </a>
+                  <Settings />
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to={"user-profile"}
                   className="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                 >
-                  Contact
-                </a>
+                  <UserCircle2 />
+                </Link>
               </li>
             </ul>
           </div>
         </div>
       </nav>
+      {/* <div className="">
+        <Sidebar />
+      </div> */}
       <div className="">{children}</div>
     </div>
   );
