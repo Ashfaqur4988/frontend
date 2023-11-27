@@ -1,8 +1,4 @@
 const PostDetails = () => {
-  return (
-    <div>
-      <div>post details</div>
-    </div>
-  );
+  return <div>post details</div>;
 };
 export default PostDetails;
