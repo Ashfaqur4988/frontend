@@ -1,9 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createUser } from "./authAPI";
+import { createUser, login } from "./authAPI";
 
 const initialState = {
   users: [],
+  loggedInUser: null,
   status: "idle",
+  error: null,
 };
 
 export const createUserAsync = createAsyncThunk(
@@ -14,6 +16,12 @@ export const createUserAsync = createAsyncThunk(
     return response.data;
   }
 );
+
+export const loginAsync = createAsyncThunk("user/login", async (loginInfo) => {
+  const response = await login(loginInfo);
+  // The value we return becomes the `fulfilled` action payload
+  return response.data;
+});
 
 export const authSlice = createSlice({
   name: "user",
@@ -29,6 +37,17 @@ export const authSlice = createSlice({
       .addCase(createUserAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.users.push(action.payload);
+      })
+      .addCase(loginAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(loginAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.loggedInUser = action.payload;
+      })
+      .addCase(loginAsync.rejected, (state, action) => {
+        state.status = "idle";
+        state.error = action.error;
       });
   },
 });
@@ -36,5 +55,7 @@ export const authSlice = createSlice({
 export const { increment, decrement, incrementByAmount } = authSlice.actions;
 
 export const selectAllUsers = (state) => state.auth.users;
+export const selectLoggedInUser = (state) => state.auth.loggedInUser;
+export const selectLogInError = (state) => state.auth.error;
 
 export default authSlice.reducer;

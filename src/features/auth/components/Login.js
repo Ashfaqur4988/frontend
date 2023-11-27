@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { createUserAsync } from "../authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Navigate } from "react-router-dom";
+import { createUserAsync, loginAsync, selectLoggedInUser } from "../authSlice";
 import { Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const user = useSelector(selectLoggedInUser);
 
   const dispatch = useDispatch();
   const {
@@ -22,6 +24,7 @@ const Login = () => {
       className="bg-[url('https://images.unsplash.com/photo-1544027993-37dbfe43562a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]
      h-screen w-screen py-6 px-4"
     >
+      {user && <Navigate to={"/"} replace={true}></Navigate>}
       <div className="flex flex-col items-center justify-center">
         <div className="flex items-center text-2xl mb-2 font-semibold text-blue-950">
           <img
@@ -39,8 +42,9 @@ const Login = () => {
             <form
               noValidate
               className="space-y-4 md:space-y-6"
-              onSubmit={handleSubmit((userData) => {
-                console.log({ userData });
+              onSubmit={handleSubmit((loginInfo) => {
+                dispatch(loginAsync(loginInfo));
+                console.log({ loginInfo });
               })}
             >
               <div>

@@ -8,7 +8,7 @@ import "./App.css";
 import Home from "./pages/Home";
 import SignUp from "./features/auth/components/SignUp";
 import Login from "./features/auth/components/Login";
-
+import Protected from "./features/auth/components/Protected";
 import PostDetailsPage from "./pages/PostDetailsPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import SettingsPage from "./pages/SettingsPage";
