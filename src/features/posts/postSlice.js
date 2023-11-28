@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createNewStatus, fetchAllPosts } from "./postAPI";
+import { createNewStatus, fetchAllPosts, fetchPostById } from "./postAPI";
 
 const initialState = {
   posts: [],
   status: "idle",
+  selectedPost: null,
 };
 
 export const fetchAllPostsAsync = createAsyncThunk(
@@ -11,6 +12,14 @@ export const fetchAllPostsAsync = createAsyncThunk(
   async () => {
     const response = await fetchAllPosts();
     // The value we return becomes the `fulfilled` action payload
+    return response.data;
+  }
+);
+
+export const fetchPostByIdAsync = createAsyncThunk(
+  "posts/fetchPostById",
+  async (id) => {
+    const response = await fetchPostById(id);
     return response.data;
   }
 );
@@ -39,6 +48,13 @@ export const postSlice = createSlice({
         state.status = "idle";
         state.posts = action.payload;
       })
+      .addCase(fetchPostByIdAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchPostByIdAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.selectedPost = action.payload;
+      })
       .addCase(createNewStatusAsync.pending, (state) => {
         state.status = "loading";
       })
@@ -52,5 +68,6 @@ export const postSlice = createSlice({
 export const { increment, decrement, incrementByAmount } = postSlice.actions;
 
 export const selectPost = (state) => state.post.posts;
+export const selectPostById = (state) => state.post.selectedPost;
 
 export default postSlice.reducer;

@@ -50,3 +50,5 @@ use create context to pass the state to the required children
 react-tilt for card tilt effect
 react router dom for the client side routing
 react hook form for form handling
+
+post -> fetch all products, fetch product by its ID,

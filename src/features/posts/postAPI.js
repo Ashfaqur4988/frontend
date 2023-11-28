@@ -7,6 +7,14 @@ export function fetchAllPosts() {
   });
 }
 
+export function fetchPostById(id) {
+  return new Promise(async (resolve) => {
+    const response = await fetch("http://localhost:8080/posts?id=" + id);
+    const data = response.json();
+    resolve({ data });
+  });
+}
+
 export function createNewStatus(post) {
   return new Promise(async (resolve) => {
     const response = await fetch("http://localhost:8080/posts", {

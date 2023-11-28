@@ -1,9 +1,12 @@
 import PostDetails from "../features/posts/components/PostDetails";
+import Navbar from "../features/navbar/Navbar";
 
 const PostDetailsPage = () => {
   return (
     <div>
-      <PostDetails />
+      <Navbar>
+        <PostDetails />
+      </Navbar>
     </div>
   );
 };

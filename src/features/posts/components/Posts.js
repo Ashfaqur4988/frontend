@@ -52,7 +52,7 @@ export function Posts() {
               console.log({ userData });
 
               const post = { ...userData };
-              post.title = userData.status;
+              post.status = userData.status;
               dispatch(createNewStatusAsync(post));
               reset();
             })}
@@ -86,11 +86,11 @@ export function Posts() {
 
         {/* posts area */}
         {posts &&
-          posts.map((post, index) => {
+          posts.map((post) => {
             return (
               <>
                 <section
-                  key={index}
+                  key={post.id}
                   className="w-1/2 lg:w-1/2 md:w-2/3 sm:w-2/3 bg-white shadow-xl m-4 border-4 border-gray-500/50 p-2 "
                 >
                   <div className=" flex justify-between ">
@@ -119,15 +119,13 @@ export function Posts() {
                       )}
                     </div>
                   </div>
-                  <Link to={"/post-details"}>
+                  <Link to={`/post-details/${post.id}`}>
                     <div className="">
-                      <img
-                        className="w-full"
-                        src="https://images.unsplash.com/photo-1700422300144-713dad3a1c4a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D"
-                        alt=""
-                      />
+                      <img className="w-full" src={post.photo} alt="" />
                     </div>
-                    <div className="text-slate-700 font-bold">{post.title}</div>
+                    <div className="text-slate-700 font-bold">
+                      {post.caption}
+                    </div>
                   </Link>
 
                   <div className="flex justify-between">
