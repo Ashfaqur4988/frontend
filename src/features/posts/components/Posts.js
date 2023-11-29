@@ -120,11 +120,15 @@ export function Posts() {
                     </div>
                   </div>
                   <Link to={`/post-details/${post.id}`}>
-                    <div className="">
-                      <img className="w-full" src={post.photo} alt="" />
+                    <div className="text-slate-700 font-bold">
+                      {post.photo ? (
+                        <img className="w-full" src={post.photo} alt="" />
+                      ) : (
+                        post.status
+                      )}
                     </div>
                     <div className="text-slate-700 font-bold">
-                      {post.caption}
+                      {post.caption && post.caption}
                     </div>
                   </Link>
 

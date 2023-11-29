@@ -13,9 +13,11 @@ const Navbar = ({ children }) => {
       "
       >
         {/* div for the logo */}
-        <div className="  text-white mr-6 lg:mr-72">
-          <img src="/NexusNest.png" className=" h-10 " alt="Logo" />
-        </div>
+        <Link to={"/"}>
+          <div className="  text-white mr-6 lg:mr-72">
+            <img src="/NexusNest.png" className=" h-10 " alt="Logo" />
+          </div>
+        </Link>
         <div>
           <button className="block lg:hidden text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm  px-4 lg:px-5 py-2 lg:mr-2 lg:py-2.5 sm:mr-2 lg:mr-0 dark:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none dark:focus:ring-purple-800">
             Home
