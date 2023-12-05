@@ -2,7 +2,7 @@
 export function fetchAllPosts() {
   return new Promise(async (resolve) => {
     const response = await fetch("http://localhost:8080/posts");
-    const data = response.json();
+    const data = await response.json();
     resolve({ data });
   });
 }
@@ -10,7 +10,7 @@ export function fetchAllPosts() {
 export function fetchPostById(id) {
   return new Promise(async (resolve) => {
     const response = await fetch("http://localhost:8080/posts?id=" + id);
-    const data = response.json();
+    const data = await response.json();
     resolve({ data });
   });
 }
@@ -22,7 +22,19 @@ export function createNewStatus(post) {
       body: JSON.stringify(post),
       headers: { "content-type": "application/json" },
     });
-    const data = response.json();
+    const data = await response.json();
     resolve({ data });
+  });
+}
+
+//delete post
+export function deletePost(itemId) {
+  return new Promise(async (resolve) => {
+    const response = await fetch("http://localhost:8080/posts/" + itemId, {
+      method: "DELETE",
+      headers: { "content-type": "application/json" },
+    });
+    const data = await response.json();
+    resolve({ data: { id: itemId } });
   });
 }

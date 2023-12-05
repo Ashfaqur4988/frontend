@@ -12,7 +12,6 @@ import Protected from "./features/auth/components/Protected";
 import PostDetailsPage from "./pages/PostDetailsPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import SettingsPage from "./pages/SettingsPage";
-
 import MyProfilePage from "./pages/MyProfilePage";
 
 const router = createBrowserRouter([
@@ -20,6 +19,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <Home />,
   },
+
   {
     path: "/post-details/:id",
     element: <PostDetailsPage />,

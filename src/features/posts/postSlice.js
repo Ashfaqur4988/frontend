@@ -1,10 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createNewStatus, fetchAllPosts, fetchPostById } from "./postAPI";
+import {
+  createNewStatus,
+  deletePost,
+  fetchAllPosts,
+  fetchPostById,
+} from "./postAPI";
 
 const initialState = {
   posts: [],
   status: "idle",
   selectedPost: null,
+  commentSettings: false,
 };
 
 export const fetchAllPostsAsync = createAsyncThunk(
@@ -28,6 +34,15 @@ export const createNewStatusAsync = createAsyncThunk(
   "posts/createNewStatus",
   async (post) => {
     const response = await createNewStatus(post);
+    return response.data;
+  }
+);
+
+//delete post
+export const deletePostAsync = createAsyncThunk(
+  "posts/deletePost",
+  async (itemId) => {
+    const response = await deletePost(itemId);
     return response.data;
   }
 );
@@ -61,11 +76,21 @@ export const postSlice = createSlice({
       .addCase(createNewStatusAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.posts.push(action.payload);
+      })
+      .addCase(deletePostAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deletePostAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        const index = state.posts.findIndex(
+          (post) => post.id === action.payload
+        );
+        state.posts.splice(index, 1);
       });
   },
 });
 
-export const { increment, decrement, incrementByAmount } = postSlice.actions;
+export const {} = postSlice.actions;
 
 export const selectPost = (state) => state.post.posts;
 export const selectPostById = (state) => state.post.selectedPost;
