@@ -15,3 +15,26 @@ export function fetchCommentsByPostId(id) {
     resolve({ data });
   });
 }
+
+export function createNewComment(comment) {
+  return new Promise(async (resolve) => {
+    const response = await fetch("http://localhost:8080/comments", {
+      method: "POST",
+      body: JSON.stringify(comment),
+      headers: { "content-type": "application/json" },
+    });
+    const data = await response.json();
+    resolve({ data });
+  });
+}
+
+export function deleteComment(id) {
+  return new Promise(async (resolve) => {
+    const response = await fetch("http://localhost:8080/comments/" + id, {
+      method: "DELETE",
+      headers: { "content-type": "application/json" },
+    });
+    const data = await response.json();
+    resolve({ data: { data: id } });
+  });
+}

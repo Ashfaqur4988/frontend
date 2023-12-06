@@ -19,6 +19,11 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  const handleEye = (e) => {
+    setPasswordVisible(!passwordVisible);
+    e.preventDefault();
+  };
+
   return (
     <div
       className="bg-[url('https://images.unsplash.com/photo-1544027993-37dbfe43562a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]
@@ -40,7 +45,6 @@ const Login = () => {
               Log in to your account
             </h1>
             <form
-              noValidate
               className="space-y-4 md:space-y-6"
               onSubmit={handleSubmit((loginInfo) => {
                 dispatch(loginAsync(loginInfo));
@@ -98,7 +102,7 @@ const Login = () => {
                     required=""
                   />
                   <button
-                    onClick={() => setPasswordVisible(!passwordVisible)}
+                    onClick={(e) => handleEye(e)}
                     className="absolute mr-1 right-0"
                   >
                     {passwordVisible ? (

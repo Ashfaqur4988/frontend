@@ -18,6 +18,16 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
 
+  const handlePasswordShow = (e) => {
+    setPasswordVisible(!passwordVisible);
+    e.preventDefault();
+  };
+
+  const handleShowConfirmPassword = (e) => {
+    setConfirmPasswordVisible(!confirmPasswordVisible);
+    e.preventDefault();
+  };
+
   return (
     <div
       className="bg-[url('https://images.unsplash.com/photo-1544027993-37dbfe43562a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]
@@ -38,7 +48,6 @@ const SignUp = () => {
               Create a new account
             </h1>
             <form
-              noValidate
               className="space-y-4 md:space-y-6"
               onSubmit={handleSubmit((userData) => {
                 console.log({ userData });
@@ -117,7 +126,7 @@ const SignUp = () => {
                     required=""
                   />
                   <button
-                    onClick={() => setPasswordVisible(!passwordVisible)}
+                    onClick={(e) => handlePasswordShow(e)}
                     className="absolute mr-1 right-0"
                   >
                     {passwordVisible ? (
@@ -154,9 +163,7 @@ const SignUp = () => {
                     required=""
                   />
                   <button
-                    onClick={() =>
-                      setConfirmPasswordVisible(!confirmPasswordVisible)
-                    }
+                    onClick={(e) => handleShowConfirmPassword(e)}
                     className="absolute mr-1 right-0"
                   >
                     {confirmPasswordVisible ? (

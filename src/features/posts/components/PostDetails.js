@@ -3,26 +3,37 @@ import {
   Heart,
   MessageCircle,
   MoreVertical,
+  SendHorizontal,
   SmilePlus,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import {
   deletePostAsync,
   fetchPostByIdAsync,
   selectPostById,
 } from "../postSlice";
 import {
+  createNewCommentAsync,
   fetchCommentsByPostIdAsync,
   selectCommentsByPostId,
 } from "../../comments/commentSlice";
 import Comments from "../../comments/Comments";
+import { useForm } from "react-hook-form";
 
 const PostDetails = () => {
   const dispatch = useDispatch();
   const selectedPost = useSelector(selectPostById);
   const params = useParams();
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+    reset,
+  } = useForm();
 
   useEffect(() => {
     dispatch(fetchPostByIdAsync(params.id));
@@ -32,15 +43,11 @@ const PostDetails = () => {
   const [like, setLike] = useState(false);
 
   //toggle comments
-  const [commentShow, setCommentShow] = useState(false);
+  // const [commentShow, setCommentShow] = useState(false);
 
   useEffect(() => {
-    if (commentShow) {
-      dispatch(fetchCommentsByPostIdAsync(params.id));
-    }
-  }, [dispatch, commentShow, params.id]);
-
-  const comments = useSelector(selectCommentsByPostId);
+    dispatch(fetchCommentsByPostIdAsync(params.id));
+  }, [dispatch, params.id]);
 
   //save toggle
   const [save, setSave] = useState(false);
@@ -52,6 +59,8 @@ const PostDetails = () => {
     // console.log(post.id);
     dispatch(deletePostAsync(post.id));
   };
+
+  const comments = useSelector(selectCommentsByPostId);
 
   return (
     <div
@@ -81,7 +90,7 @@ const PostDetails = () => {
                       <div className="flex items-center">
                         <SmilePlus color="red" className="h-10 mr-3" />
                         <p className="text-slate-900 font-bold hover:italic cursor-pointer">
-                          User_Name
+                          {post.userName}
                         </p>
                       </div>
                     </Link>
@@ -123,7 +132,7 @@ const PostDetails = () => {
                           className="mr-4 transition-all h-10"
                         />
                       </button>
-                      <button onClick={() => setCommentShow(!commentShow)}>
+                      <button>
                         <MessageCircle
                           size={30}
                           className=" transition-all h-10"
@@ -140,49 +149,57 @@ const PostDetails = () => {
                   </div>
                 </section>
                 {/* toggle comments */}
-                {commentShow && (
-                  <div className="w-1/2 lg:w-1/2 md:w-2/3 sm:w-2/3 flex flex-col justify-between ">
-                    <div className="mb-2">
-                      <form>
-                        <label htmlFor="chat" className="sr-only">
-                          Your message
-                        </label>
-                        <div className="flex items-center px-3 py-2 rounded-lg bg-gray-50 ">
-                          <textarea
-                            id="comments"
-                            rows={1}
-                            className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
-                            placeholder="Your comment..."
-                            defaultValue={""}
-                          />
-                          <button
-                            type="submit"
-                            className="inline-flex justify-center p-2 text-slate-600 rounded-full cursor-pointer hover:bg-blue-100 "
-                          >
-                            <svg
-                              className="w-5 h-5 rotate-90 rtl:-rotate-90"
-                              aria-hidden="true"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="currentColor"
-                              viewBox="0 0 18 20"
-                            >
-                              <path d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z" />
-                            </svg>
-                            <span className="sr-only">Send message</span>
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                    <div className="">
-                      {comments &&
-                        comments.map((comment) => {
-                          return (
-                            <Comments id={comment.id} body={comment.body} />
-                          );
-                        })}
-                    </div>
+
+                <div className="w-1/2 lg:w-1/2 md:w-2/3 sm:w-2/3 flex flex-col justify-between ">
+                  <div className="mb-2">
+                    <form
+                      onSubmit={handleSubmit((comment) => {
+                        console.log({ comment });
+                        const newComment = { ...comment };
+                        newComment.body = comment.body;
+                        newComment.postId = params.id;
+                        newComment.user = { id: 1, name: "User User" };
+                        delete newComment.comments;
+                        // console.log({ newComment });
+                        dispatch(createNewCommentAsync(newComment));
+                        reset();
+                      })}
+                    >
+                      <label htmlFor="chat" className="sr-only">
+                        Your message
+                      </label>
+                      <div className="flex items-center px-3 py-2 rounded-lg bg-gray-50 ">
+                        <textarea
+                          {...register("body", { required: true })}
+                          id="body"
+                          rows={1}
+                          className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+                          placeholder="Your comment..."
+                          defaultValue={""}
+                        />
+                        <button
+                          type="submit"
+                          className="inline-flex justify-center p-2 text-slate-600 rounded-full cursor-pointer hover:bg-blue-100 "
+                        >
+                          <SendHorizontal />
+                          <span className="sr-only">Send message</span>
+                        </button>
+                      </div>
+                    </form>
                   </div>
-                )}
+                  <div className="">
+                    {comments &&
+                      comments.map((comment) => {
+                        return (
+                          <Comments
+                            id={comment.id}
+                            body={comment.body}
+                            username={comment.user}
+                          />
+                        );
+                      })}
+                  </div>
+                </div>
               </div>
             );
           })}

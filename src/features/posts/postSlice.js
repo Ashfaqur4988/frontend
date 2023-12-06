@@ -10,7 +10,6 @@ const initialState = {
   posts: [],
   status: "idle",
   selectedPost: null,
-  commentSettings: false,
 };
 
 export const fetchAllPostsAsync = createAsyncThunk(
