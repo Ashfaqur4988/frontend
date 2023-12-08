@@ -4,6 +4,7 @@ import {
   deleteComment,
   fetchAllComments,
   fetchCommentsByPostId,
+  updateComment,
 } from "./commentAPI";
 
 const initialState = {
@@ -47,6 +48,15 @@ export const deleteCommentAsync = createAsyncThunk(
   }
 );
 
+export const updateCommentAsync = createAsyncThunk(
+  "comments/updateCommentAsync",
+  async (updatedComment) => {
+    const response = await updateComment(updatedComment);
+    // The value we return becomes the `fulfilled` action payload
+    return response.data;
+  }
+);
+
 export const commentSlice = createSlice({
   name: "comments",
   initialState,
@@ -85,6 +95,16 @@ export const commentSlice = createSlice({
           (comment) => comment.id === action.payload
         );
         state.comments.splice(index, 1);
+      })
+      .addCase(updateCommentAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateCommentAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        const index = state.comments.findIndex(
+          (comment) => comment.id === action.payload
+        );
+        state.comments.splice(index, 1, action.payload);
       });
   },
 });

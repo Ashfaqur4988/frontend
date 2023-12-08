@@ -16,6 +16,7 @@ import {
 } from "../postSlice";
 import {
   createNewCommentAsync,
+  fetchAllCommentsAsync,
   fetchCommentsByPostIdAsync,
   selectCommentsByPostId,
 } from "../../comments/commentSlice";
@@ -56,7 +57,6 @@ const PostDetails = () => {
   const [verticalDotsMenu, setVerticalDotsMenu] = useState(false);
 
   const handleDelete = (post) => {
-    // console.log(post.id);
     dispatch(deletePostAsync(post.id));
   };
 
@@ -154,14 +154,16 @@ const PostDetails = () => {
                   <div className="mb-2">
                     <form
                       onSubmit={handleSubmit((comment) => {
-                        console.log({ comment });
+                        // console.log({ comment });
                         const newComment = { ...comment };
                         newComment.body = comment.body;
                         newComment.postId = params.id;
+                        //TODO: need to make this detail dynamic
                         newComment.user = { id: 1, name: "User User" };
                         delete newComment.comments;
                         // console.log({ newComment });
                         dispatch(createNewCommentAsync(newComment));
+                        dispatch(fetchCommentsByPostIdAsync(params.id));
                         reset();
                       })}
                     >
@@ -194,7 +196,8 @@ const PostDetails = () => {
                           <Comments
                             id={comment.id}
                             body={comment.body}
-                            username={comment.user}
+                            user={comment.user}
+                            postId={comment.postId}
                           />
                         );
                       })}

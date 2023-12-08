@@ -38,3 +38,18 @@ export function deleteComment(id) {
     resolve({ data: { data: id } });
   });
 }
+
+export function updateComment(updatedComment) {
+  return new Promise(async (resolve) => {
+    const response = await fetch(
+      "http://localhost:8080/comments/" + updatedComment.id,
+      {
+        method: "PATCH",
+        body: JSON.stringify(updatedComment),
+        headers: { "content-type": "application/json" },
+      }
+    );
+    const data = await response.json();
+    resolve({ data });
+  });
+}

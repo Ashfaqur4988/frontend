@@ -251,7 +251,7 @@
       "id": 12
     },
     {
-      "body": "test 2",
+      "body": "edited",
       "postId": "1",
       "user": {
         "id": 1,
@@ -260,31 +260,13 @@
       "id": 13
     },
     {
-      "body": "test 3",
-      "postId": "1",
-      "user": {
-        "id": 1,
-        "name": "User User"
-      },
-      "id": 14
-    },
-    {
-      "body": "test 4",
+      "body": "once more updated",
       "postId": "1",
       "user": {
         "id": 1,
         "name": "User User"
       },
       "id": 15
-    },
-    {
-      "body": "test 6",
-      "postId": "1",
-      "user": {
-        "id": 1,
-        "name": "User User"
-      },
-      "id": 16
     }
   ],
   "likes": [

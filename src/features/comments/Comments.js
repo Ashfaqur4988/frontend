@@ -1,10 +1,17 @@
-import { MoreVertical } from "lucide-react";
-import { useState } from "react";
+import { MoreVertical, SendHorizontal } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { deleteCommentAsync } from "./commentSlice";
+import {
+  deleteCommentAsync,
+  fetchCommentsByPostIdAsync,
+  updateCommentAsync,
+} from "./commentSlice";
+import { useForm } from "react-hook-form";
 
-const Comments = ({ id, body, username }) => {
+const Comments = ({ id, body, user, postId }) => {
   const [verticalMenu, setVerticalMenu] = useState(false);
+
+  const [showEditComment, setShowEditComment] = useState(false);
 
   const handleMenu = () => {
     setVerticalMenu(!verticalMenu);
@@ -14,7 +21,23 @@ const Comments = ({ id, body, username }) => {
 
   const handleDelete = (id) => {
     dispatch(deleteCommentAsync(id));
+    dispatch(fetchCommentsByPostIdAsync(postId));
   };
+
+  const handleEditShow = () => {
+    setShowEditComment(!showEditComment);
+  };
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+    reset,
+  } = useForm();
+
+  useEffect(() => {}, []);
 
   return (
     <div>
@@ -27,7 +50,7 @@ const Comments = ({ id, body, username }) => {
                 src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
                 alt="Bonnie Green"
               />
-              {username.name}
+              {user.name}
             </p>
             <p className="text-sm text-gray-600 dark:text-gray-400">
               <time pubdate="" dateTime="2022-03-12" title="March 12th, 2022">
@@ -52,7 +75,7 @@ const Comments = ({ id, body, username }) => {
                   delete
                 </li>
                 <li
-                  onClick={() => console.log("edit")}
+                  onClick={() => handleEditShow()}
                   className=" rounded-br-xl  rounded-bl-xl cursor-pointer bg-gray-200 text-blue-900 font-bold w-16 h-8  text-center"
                 >
                   edit
@@ -65,6 +88,46 @@ const Comments = ({ id, body, username }) => {
         </footer>
         <p className="text-gray-800 ">{body}</p>
       </article>
+      {showEditComment && (
+        <form
+          onSubmit={handleSubmit((comment) => {
+            console.log({ comment });
+
+            const updatedComment = {
+              id: id,
+              body: comment.body,
+              postId: postId,
+              user: user,
+            };
+            console.log({ updatedComment });
+            dispatch(updateCommentAsync(updatedComment));
+            dispatch(fetchCommentsByPostIdAsync(postId));
+            reset();
+            setShowEditComment(!showEditComment);
+          })}
+        >
+          <label htmlFor="chat" className="sr-only">
+            Your Comment
+          </label>
+          <div className="flex items-center px-3 py-2 rounded-lg bg-gray-50 ">
+            <textarea
+              {...register("body", { required: true })}
+              id="body"
+              rows={1}
+              className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+              placeholder="New comment..."
+              defaultValue={""}
+            />
+            <button
+              type="submit"
+              className="inline-flex justify-center p-2 text-slate-600 rounded-full cursor-pointer hover:bg-blue-100 "
+            >
+              <SendHorizontal />
+              <span className="sr-only">Send Comment</span>
+            </button>
+          </div>
+        </form>
+      )}
     </div>
   );
 };
