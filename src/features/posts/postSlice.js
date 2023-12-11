@@ -11,6 +11,7 @@ const initialState = {
   posts: [],
   status: "idle",
   selectedPost: null,
+  isSelectedPost: false,
 };
 
 export const fetchAllPostsAsync = createAsyncThunk(
@@ -78,6 +79,7 @@ export const postSlice = createSlice({
       .addCase(fetchPostByIdAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.selectedPost = action.payload;
+        state.isSelectedPost = true;
       })
       .addCase(createNewStatusAsync.pending, (state) => {
         state.status = "loading";
@@ -113,5 +115,6 @@ export const {} = postSlice.actions;
 
 export const selectPost = (state) => state.post.posts;
 export const selectPostById = (state) => state.post.selectedPost;
+export const selectIsSelectedPost = (state) => state.post.isSelectedPost;
 
 export default postSlice.reducer;

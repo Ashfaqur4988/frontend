@@ -109,12 +109,6 @@
       "numOfLikes": 2
     },
     {
-      "status": "test",
-      "userId": 1,
-      "userName": "User User",
-      "id": 13
-    },
-    {
       "status": "a new post is here",
       "userId": 1,
       "userName": "User User",
@@ -267,16 +261,6 @@
         "name": "User User"
       },
       "id": 15
-    },
-    {
-      "body": "new comment",
-      "status": "new test",
-      "postId": "13",
-      "user": {
-        "id": 1,
-        "name": "User User"
-      },
-      "id": 16
     }
   ],
   "likes": [
