@@ -38,3 +38,19 @@ export function deletePost(itemId) {
     resolve({ data: { id: itemId } });
   });
 }
+
+//update post
+export function updatePost(newUpdatedPost) {
+  return new Promise(async (resolve) => {
+    const response = await fetch(
+      "http://localhost:8080/posts/" + newUpdatedPost.id,
+      {
+        method: "PATCH",
+        body: JSON.stringify(newUpdatedPost),
+        headers: { "content-type": "application/json" },
+      }
+    );
+    const data = await response.json();
+    resolve({ data });
+  });
+}

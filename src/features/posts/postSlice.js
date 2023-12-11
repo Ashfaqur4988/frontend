@@ -4,6 +4,7 @@ import {
   deletePost,
   fetchAllPosts,
   fetchPostById,
+  updatePost,
 } from "./postAPI";
 
 const initialState = {
@@ -42,6 +43,15 @@ export const deletePostAsync = createAsyncThunk(
   "posts/deletePost",
   async (itemId) => {
     const response = await deletePost(itemId);
+    return response.data;
+  }
+);
+
+//delete post
+export const updatePostAsync = createAsyncThunk(
+  "posts/updatePost",
+  async (newUpdatedPost) => {
+    const response = await updatePost(newUpdatedPost);
     return response.data;
   }
 );
@@ -85,6 +95,16 @@ export const postSlice = createSlice({
           (post) => post.id === action.payload
         );
         state.posts.splice(index, 1);
+      })
+      .addCase(updatePostAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updatePostAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        const index = state.posts.findIndex(
+          (post) => post.id === action.payload
+        );
+        state.posts.splice(index, 1, action.payload);
       });
   },
 });

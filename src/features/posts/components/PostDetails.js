@@ -13,6 +13,7 @@ import {
   deletePostAsync,
   fetchPostByIdAsync,
   selectPostById,
+  updatePostAsync,
 } from "../postSlice";
 import {
   createNewCommentAsync,
@@ -34,6 +35,7 @@ const PostDetails = () => {
     watch,
     formState: { errors },
     reset,
+    setValue,
   } = useForm();
 
   useEffect(() => {
@@ -56,6 +58,14 @@ const PostDetails = () => {
   //toggle 3 dots menu
   const [verticalDotsMenu, setVerticalDotsMenu] = useState(false);
 
+  //edit post show form
+  const [showEditForm, setShowEditForm] = useState(false);
+  useEffect(() => {
+    if (showEditForm) {
+      setValue("status", selectedPost.status);
+    }
+  }, [setValue, selectedPost, showEditForm]);
+
   const handleDelete = (post) => {
     dispatch(deletePostAsync(post.id));
   };
@@ -73,7 +83,12 @@ const PostDetails = () => {
             return (
               <div className="w-full h-full flex flex-col items-center">
                 <div className=" w-1/2 lg:w-1/2 md:w-2/3 sm:w-2/3 flex justify-between mb-3">
-                  <button className="text-slate-700 bg-blue-200 hover:text-white border border-slate-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ">
+                  <button
+                    className="text-slate-700 bg-blue-200 hover:text-white border border-slate-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 "
+                    onClick={() => {
+                      setShowEditForm(!showEditForm);
+                    }}
+                  >
                     Edit Post
                   </button>
                   <button
@@ -148,57 +163,103 @@ const PostDetails = () => {
                     </button>
                   </div>
                 </section>
-                {/* toggle comments */}
+
+                {/* toggle comments & edit post form */}
 
                 <div className="w-1/2 lg:w-1/2 md:w-2/3 sm:w-2/3 flex flex-col justify-between ">
-                  <div className="mb-2">
-                    <form
-                      onSubmit={handleSubmit((comment) => {
-                        // console.log({ comment });
-                        const newComment = { ...comment };
-                        newComment.body = comment.body;
-                        newComment.postId = params.id;
-                        //TODO: need to make this detail dynamic
-                        newComment.user = { id: 1, name: "User User" };
-                        delete newComment.comments;
-                        // console.log({ newComment });
-                        dispatch(createNewCommentAsync(newComment));
-                        dispatch(fetchCommentsByPostIdAsync(params.id));
-                        reset();
-                      })}
-                    >
-                      <label htmlFor="chat" className="sr-only">
-                        Your message
-                      </label>
-                      <div className="flex items-center px-3 py-2 rounded-lg bg-gray-50 ">
-                        <textarea
-                          {...register("body", { required: true })}
-                          id="body"
-                          rows={1}
-                          className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
-                          placeholder="Your comment..."
-                          defaultValue={""}
-                        />
-                        <button
-                          type="submit"
-                          className="inline-flex justify-center p-2 text-slate-600 rounded-full cursor-pointer hover:bg-blue-100 "
-                        >
-                          <SendHorizontal />
-                          <span className="sr-only">Send message</span>
-                        </button>
-                      </div>
-                    </form>
-                  </div>
+                  {showEditForm ? (
+                    <div className="mb-2">
+                      <form
+                        onSubmit={handleSubmit((updatedPost) => {
+                          const newUpdatedPost = {
+                            //TODO: make userId and userName dynamic
+                            id: params.id,
+                            status: updatedPost.status,
+                            userName: selectedPost.userName,
+                            userId: selectedPost.userId,
+                          };
+                          delete newUpdatedPost.body;
+                          dispatch(updatePostAsync(newUpdatedPost));
+                          dispatch(fetchPostByIdAsync(params.id));
+                          console.log({ newUpdatedPost });
+                          reset();
+                        })}
+                      >
+                        <label htmlFor="status" className="sr-only">
+                          Edit Your Post
+                        </label>
+                        <div className="flex items-center px-3 py-2 rounded-lg bg-gray-50 ">
+                          <textarea
+                            {...register("status", { required: true })}
+                            id="status"
+                            name="status"
+                            rows={1}
+                            className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+                            placeholder="Edit your status"
+                            defaultValue={""}
+                          />
+                          <button
+                            type="submit"
+                            className="inline-flex justify-center p-2 text-white rounded-full cursor-pointer bg-blue-600 hover:bg-blue-950"
+                          >
+                            Post
+                            <span className="sr-only">Send Comment</span>
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  ) : (
+                    <div className="mb-2">
+                      <form
+                        onSubmit={handleSubmit((comment) => {
+                          // console.log({ comment });
+                          const newComment = { ...comment };
+                          newComment.body = comment.body;
+                          newComment.postId = params.id;
+                          //TODO: need to make this detail dynamic
+                          newComment.user = { id: 1, name: "User User" };
+                          delete newComment.comments;
+                          // console.log({ newComment });
+                          dispatch(createNewCommentAsync(newComment));
+                          dispatch(fetchCommentsByPostIdAsync(params.id));
+                          reset();
+                        })}
+                      >
+                        <label htmlFor="body" className="sr-only">
+                          Your Comment
+                        </label>
+                        <div className="flex items-center px-3 py-2 rounded-lg bg-gray-50 ">
+                          <textarea
+                            {...register("body", { required: true })}
+                            id="body"
+                            rows={1}
+                            className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+                            placeholder="Your comment..."
+                            defaultValue={""}
+                          />
+                          <button
+                            type="submit"
+                            className="inline-flex justify-center p-2 text-slate-600 rounded-full cursor-pointer hover:bg-blue-100 "
+                          >
+                            <SendHorizontal />
+                            <span className="sr-only">Send message</span>
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  )}
                   <div className="">
                     {comments &&
                       comments.map((comment) => {
                         return (
-                          <Comments
-                            id={comment.id}
-                            body={comment.body}
-                            user={comment.user}
-                            postId={comment.postId}
-                          />
+                          <>
+                            <Comments
+                              id={comment.id}
+                              body={comment.body}
+                              user={comment.user}
+                              postId={comment.postId}
+                            />
+                          </>
                         );
                       })}
                   </div>
