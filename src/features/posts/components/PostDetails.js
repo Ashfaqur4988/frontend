@@ -112,7 +112,7 @@ const PostDetails = () => {
                         <div className="flex items-center">
                           <SmilePlus color="red" className="h-10 mr-3" />
                           <p className="text-slate-900 font-bold hover:italic cursor-pointer">
-                            {post.userName}
+                            {post.userName} {post.id}
                           </p>
                         </div>
                       </Link>
