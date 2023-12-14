@@ -21,7 +21,6 @@ import {
 const SinglePost = ({ post }) => {
   const allLikes = useSelector(selectAllLikes);
 
-  //TODO: make like persist even after refresh
   const [like, setLike] = useState(false);
 
   // useEffect(() => {
@@ -45,6 +44,7 @@ const SinglePost = ({ post }) => {
   const dispatch = useDispatch();
 
   const handleLike = () => {
+    //TODO: make like persist even after refresh
     setLike(!like);
     let likeData = {
       postId: post.id,
@@ -62,6 +62,7 @@ const SinglePost = ({ post }) => {
   };
 
   const handleSave = () => {
+    //TODO: make savedPost persist even after refresh
     setSave(!save);
     let savedPostData = {
       postId: post.id,
