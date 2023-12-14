@@ -13,6 +13,10 @@ import {
   deleteLikeAsync,
   selectAllLikes,
 } from "../../likes/likesSlice";
+import {
+  savePostsAsync,
+  unSavePostsAsync,
+} from "../../savedPost/savedPostsSlice";
 
 const SinglePost = ({ post }) => {
   const allLikes = useSelector(selectAllLikes);
@@ -51,13 +55,28 @@ const SinglePost = ({ post }) => {
     if (like) {
       console.log("delete like action ", like);
       dispatch(deleteLikeAsync(likeData));
-
-      // setLike(false);
     } else {
       console.log("add like action ", like);
       dispatch(addLikeAsync(likeData));
+    }
+  };
 
-      // setLike(true);
+  const handleSave = () => {
+    setSave(!save);
+    let savedPostData = {
+      postId: post.id,
+      user: {
+        id: post.userId,
+        name: post.userName,
+      },
+    };
+    console.log(savedPostData);
+    if (save) {
+      console.log("delete save post action ", save);
+      dispatch(unSavePostsAsync(savedPostData));
+    } else {
+      console.log("add save post action ", save);
+      dispatch(savePostsAsync(savedPostData));
     }
   };
 
@@ -116,7 +135,7 @@ const SinglePost = ({ post }) => {
             <MessageCircle size={30} className=" transition-all h-10" />
           </button>
         </div>
-        <button onClick={() => setSave(!save)}>
+        <button onClick={handleSave}>
           <Bookmark
             fill={save ? "black" : "white"}
             color="black"
