@@ -28,7 +28,6 @@ import { useForm } from "react-hook-form";
 const PostDetails = () => {
   const dispatch = useDispatch();
   const selectedPost = useSelector(selectPostById);
-  const isSelectedPost = useSelector(selectIsSelectedPost);
   const params = useParams();
   const navigateTo = useNavigate();
 

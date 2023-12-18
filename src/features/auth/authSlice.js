@@ -3,7 +3,13 @@ import { createUser, login } from "./authAPI";
 
 const initialState = {
   users: [],
-  loggedInUser: null,
+  //TODO: will change this after making the backend
+  loggedInUser: {
+    id: 1,
+    email: "user@user.com",
+    password: "User@123",
+    name: "User User",
+  },
   status: "idle",
   error: null,
 };

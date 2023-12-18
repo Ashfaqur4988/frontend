@@ -54,3 +54,12 @@ export function updatePost(newUpdatedPost) {
     resolve({ data });
   });
 }
+
+//get post by user id
+export function fetchPostsByUserId(userId) {
+  return new Promise(async (resolve, reject) => {
+    const response = await fetch(`http://localhost:8080/users/${userId}/posts`);
+    const data = await response.json();
+    resolve({ data });
+  });
+}

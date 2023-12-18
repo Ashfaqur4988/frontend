@@ -4,6 +4,7 @@ import {
   deletePost,
   fetchAllPosts,
   fetchPostById,
+  fetchPostsByUserId,
   updatePost,
 } from "./postAPI";
 
@@ -11,7 +12,7 @@ const initialState = {
   posts: [],
   status: "idle",
   selectedPost: null,
-  isSelectedPost: false,
+  postsByUserId: null,
 };
 
 export const fetchAllPostsAsync = createAsyncThunk(
@@ -48,11 +49,19 @@ export const deletePostAsync = createAsyncThunk(
   }
 );
 
-//delete post
+//update post post
 export const updatePostAsync = createAsyncThunk(
   "posts/updatePost",
   async (newUpdatedPost) => {
     const response = await updatePost(newUpdatedPost);
+    return response.data;
+  }
+);
+
+export const fetchPostsByUserIdAsync = createAsyncThunk(
+  "posts/fetchPostsByUserId",
+  async (userId) => {
+    const response = await fetchPostsByUserId(userId);
     return response.data;
   }
 );
@@ -79,7 +88,6 @@ export const postSlice = createSlice({
       .addCase(fetchPostByIdAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.selectedPost = action.payload;
-        state.isSelectedPost = true;
       })
       .addCase(createNewStatusAsync.pending, (state) => {
         state.status = "loading";
@@ -107,6 +115,13 @@ export const postSlice = createSlice({
           (post) => post.id === action.payload
         );
         state.posts.splice(index, 1, action.payload);
+      })
+      .addCase(fetchPostsByUserIdAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchPostsByUserIdAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.postsByUserId = action.payload;
       });
   },
 });
@@ -115,6 +130,6 @@ export const {} = postSlice.actions;
 
 export const selectPost = (state) => state.post.posts;
 export const selectPostById = (state) => state.post.selectedPost;
-export const selectIsSelectedPost = (state) => state.post.isSelectedPost;
+export const selectPostsByUserId = (state) => state.post.postsByUserId;
 
 export default postSlice.reducer;
