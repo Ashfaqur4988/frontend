@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createUser, login } from "./authAPI";
+import { createUser, fetchAllUsers, login, updateUser } from "./authAPI";
 
 const initialState = {
   users: [],
@@ -29,6 +29,22 @@ export const loginAsync = createAsyncThunk("user/login", async (loginInfo) => {
   return response.data;
 });
 
+export const fetchAllUsersAsync = createAsyncThunk(
+  "user/fetchAllUsers",
+  async () => {
+    const response = await fetchAllUsers();
+    return response.data;
+  }
+);
+
+export const updateUserAsync = createAsyncThunk(
+  "user/updateUser",
+  async (personalDetails) => {
+    const response = await updateUser(personalDetails);
+    return response.data;
+  }
+);
+
 export const authSlice = createSlice({
   name: "user",
   initialState,
@@ -54,6 +70,23 @@ export const authSlice = createSlice({
       .addCase(loginAsync.rejected, (state, action) => {
         state.status = "idle";
         state.error = action.error;
+      })
+      .addCase(fetchAllUsersAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchAllUsersAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.users = action.payload;
+      })
+      .addCase(updateUserAsync.fulfilled, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(updateUserAsync.rejected, (state, action) => {
+        state.status = "idle";
+        const index = state.users.findIndex(
+          (user) => user.id === action.payload
+        );
+        state.users.splice(index, 1, action.payload);
       });
   },
 });

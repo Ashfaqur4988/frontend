@@ -1,4 +1,11 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchAllUsersAsync,
+  selectLoggedInUser,
+  updateUserAsync,
+} from "../../auth/authSlice";
 
 const EditProfile = () => {
   const {
@@ -9,6 +16,10 @@ const EditProfile = () => {
     reset,
   } = useForm();
 
+  const dispatch = useDispatch();
+
+  const loggedInUser = useSelector(selectLoggedInUser);
+
   return (
     <div>
       <div className="bg-white  rounded-lg shadow relative">
@@ -17,8 +28,26 @@ const EditProfile = () => {
         </div>
         <div className="p-6 space-y-6">
           <form
-            onSubmit={handleSubmit((post) => {
-              console.log({ post });
+            onSubmit={handleSubmit((personalDetails) => {
+              //   console.log({ personalDetails });
+              const newPersonalDetails = {
+                ...loggedInUser,
+                name: personalDetails.fullName,
+                bio: personalDetails.bio,
+                gender: personalDetails.gender,
+                phone: personalDetails.phone,
+                address: {
+                  street: personalDetails.street,
+                  city: personalDetails.city,
+                  state: personalDetails.state,
+                  country: personalDetails.country,
+                  pin: personalDetails.pin,
+                },
+              };
+              delete newPersonalDetails.password;
+              console.log({ newPersonalDetails });
+              dispatch(updateUserAsync(newPersonalDetails));
+              dispatch(fetchAllUsersAsync());
             })}
           >
             <div className="grid grid-cols-6 gap-6">
@@ -31,11 +60,11 @@ const EditProfile = () => {
                 </label>
                 <input
                   type="text"
-                  name="full-name"
-                  id="full-name"
+                  name="fullName"
+                  id="fullName"
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                   placeholder="full name"
-                  {...register("full-name", { required: true })}
+                  {...register("fullName", { required: true })}
                 />
               </div>
               <div className="col-span-6 sm:col-span-3">

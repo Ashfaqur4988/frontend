@@ -13,6 +13,7 @@ import PostDetailsPage from "./pages/PostDetailsPage";
 
 import SettingsPage from "./pages/SettingsPage";
 import MyProfilePage from "./pages/MyProfilePage";
+import { fetchAllUsersAsync } from "./features/auth/authSlice";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/settings",
+    path: "/settings/:id",
     element: <SettingsPage />,
   },
   {
@@ -47,6 +48,7 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllPostsAsync());
+    dispatch(fetchAllUsersAsync());
   }, [dispatch]);
   return (
     <div className="App">

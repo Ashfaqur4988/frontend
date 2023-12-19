@@ -31,3 +31,26 @@ export function login(loginInfo) {
     }
   });
 }
+
+export function fetchAllUsers() {
+  return new Promise(async (resolve, reject) => {
+    const response = await fetch(`http://localhost:8080/users`);
+    const data = response.json();
+    resolve({ data });
+  });
+}
+
+export function updateUser(personalDetails) {
+  return new Promise(async (resolve, reject) => {
+    const response = await fetch(
+      `http://localhost:8080/users/${personalDetails.id}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify(personalDetails),
+        headers: { "content-type": "application/json" },
+      }
+    );
+    const data = await response.json();
+    resolve({ data });
+  });
+}

@@ -114,7 +114,17 @@
       "email": "user@user.com",
       "name": "User User",
       "password": "User@123",
-      "id": 1
+      "id": 1,
+      "bio": "bio",
+      "gender": "male",
+      "phone": "00000000000",
+      "address": {
+        "street": "street",
+        "city": "city",
+        "state": "state",
+        "country": "country",
+        "pin": "99999"
+      }
     },
     {
       "email": "demo@demo.com",
