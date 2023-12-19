@@ -1,8 +1,11 @@
 import Settings from "../features/user/components/Settings";
+import Navbar from "../features/navbar/Navbar";
 const SettingsPage = () => {
   return (
     <div>
-      <Settings />
+      <Navbar>
+        <Settings />
+      </Navbar>
     </div>
   );
 };

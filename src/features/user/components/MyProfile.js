@@ -15,6 +15,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import SinglePost from "../../posts/components/SinglePost";
+import { selectLoggedInUser } from "../../auth/authSlice";
 
 const MyProfile = () => {
   const [showPost, setShowPost] = useState(true);
@@ -96,9 +97,6 @@ const MyProfile = () => {
                   <h2 className="text-xl leading-6 font-bold text-white">
                     USER__NAME
                   </h2>
-                  <p className="text-sm leading-5 font-medium text-gray-300">
-                    User Full Name
-                  </p>
                 </div>
                 {/* Description and others */}
                 <div className="mt-3">
@@ -140,11 +138,11 @@ const MyProfile = () => {
               </div>
             </div>
             <hr className="border-gray-800" />
-            <div className="w-full h-full flex flex-col bg-[#6F7171]">
+            <div className="w-full h-full flex flex-col bg-[#6F7171] pt-2">
               {/* new post form */}
-              <div className="h-full w-full">
+              <div className="h-full w-full flex">
                 <form
-                  className=" w-full flex flex-col"
+                  className=" w-full flex flex-col "
                   onSubmit={handleSubmit((post) => {
                     console.log({ post });
 
@@ -158,8 +156,8 @@ const MyProfile = () => {
                     reset();
                   })}
                 >
-                  <div className="flex flex-col">
-                    <div className="w-full">
+                  <div className="flex flex-col items-center">
+                    <div className="w-5/6">
                       <textarea
                         {...register("status", { required: true })}
                         name="status"
@@ -169,14 +167,14 @@ const MyProfile = () => {
                       ></textarea>
                     </div>
                   </div>
-                  <div className="flex items-center justify-end">
+                  <div className="flex items-center justify-end w-5/6">
                     <button
                       type="submit"
                       className="px-4 py-2 bg-blue-600 rounded-lg text-white outline-none shadow-lg transform active:scale-x-75 transition-transform mx-5 flex"
                     >
                       Post
                     </button>
-                    <button className="cursor-pointer mr-3">
+                    <button className="cursor-pointer ">
                       <Paperclip color="white" />
                     </button>
                   </div>
@@ -201,6 +199,7 @@ const MyProfile = () => {
               {/* post section */}
               <div className="h-full w-full flex flex-col items-center">
                 {/* {showPost ? <div>all posts</div> : <div>saved posts</div>} */}
+                {/* //TODO: need to put saved posts functionality here */}
                 {/* posts area */}
                 {posts &&
                   posts.map((post) => {

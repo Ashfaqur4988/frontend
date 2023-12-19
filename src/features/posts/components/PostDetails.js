@@ -107,7 +107,7 @@ const PostDetails = () => {
                   </div>
                   <section className=" w-1/2 lg:w-1/2 md:w-2/3 sm:w-2/3 bg-white shadow-xl  border-4 border-gray-500/50 p-2">
                     <div className=" flex justify-between items-center">
-                      <Link to={"user-profile"}>
+                      <Link to={`my-profile/${post.userId}`}>
                         <div className="flex items-center">
                           <SmilePlus color="red" className="h-10 mr-3" />
                           <p className="text-slate-900 font-bold hover:italic cursor-pointer">

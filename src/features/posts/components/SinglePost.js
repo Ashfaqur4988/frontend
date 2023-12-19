@@ -84,7 +84,7 @@ const SinglePost = ({ post }) => {
   return (
     <>
       <div className=" flex justify-between ">
-        <Link to={"user-profile"}>
+        <Link to={`my-profile/${post.userId}`}>
           <div className="flex items-center">
             <SmilePlus color="red" className="h-10 mr-3" />
             <p className="text-slate-900 font-bold hover:italic cursor-pointer">
